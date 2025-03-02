@@ -42,6 +42,7 @@ public class LinkedXList<T> implements XList<T> {
     public void put(T item, int index) {
         Node<T> newNode = new Node<>(item);
         Node<T> currentNode = getCurrentNode(index);
+        size++;
         newNode.setNext(currentNode.getNext());
         currentNode.setNext(newNode);
     }
@@ -53,6 +54,7 @@ public class LinkedXList<T> implements XList<T> {
         Node<T> preNode = getCurrentNode(index-1);
         preNode.setNext(currentNode.getNext());
         currentNode.setNext(null);
+        size--;
         return result;
     }
 

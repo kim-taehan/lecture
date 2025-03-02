@@ -42,7 +42,7 @@ class LinkedXListTest {
     @Test
     void put(){
         // given
-        XList<String> items = new ArrayXList<>(3);
+        XList<String> items = new LinkedXList<>();
         items.add("red");
         items.add("blue");
         items.add("white");
@@ -51,7 +51,7 @@ class LinkedXListTest {
         items.put("black", 2);
 
         // then
-        assertThat(items.getIndex(2)).isEqualTo("black");
+        assertThat(items.getIndex(3)).isEqualTo("black");
     }
 
 
@@ -59,7 +59,7 @@ class LinkedXListTest {
     @Test
     void remove(){
         // given
-        XList<String> items = new ArrayXList<>(3);
+        XList<String> items = new LinkedXList<>();
         items.add("red");
         items.add("blue");
         items.add("white");
