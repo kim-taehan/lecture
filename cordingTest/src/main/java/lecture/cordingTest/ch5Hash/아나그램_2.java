@@ -17,7 +17,7 @@ Caaab
 
 NO
  */
-public class 아나그램 {
+public class 아나그램_2 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

@@ -41,3 +41,25 @@ private static int solution(int n, int m, int[] arr) {
     return maxAmount;
 }
 ```
+
+# 후위식 연산 
+- 앞에 있는 값이 앞으로 들어가는 것만 주의하면 된다. 
+- 352+*9- = 12
+```java
+private static int solution(String text) {
+    Deque<Integer> stack = new ArrayDeque<>();
+    for (char c : text.toCharArray()) {
+        // 352+*9-
+        if(Character.isDigit(c)) stack.push(c-48);
+        else {
+            int rt = stack.pop();
+            int lt = stack.pop();
+            if(c == '-') stack.push(lt-rt);
+            else if(c == '+') stack.push(lt+rt);
+            else if(c == '*') stack.push(lt*rt);
+            else if(c == '/') stack.push(lt/rt);
+        }
+    }
+    return stack.getFirst();
+}
+```
