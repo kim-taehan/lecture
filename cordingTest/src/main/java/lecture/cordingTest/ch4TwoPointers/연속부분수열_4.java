@@ -19,7 +19,7 @@ N개의 수로 이루어진 수열이 주어집니다.
 : 슬라이딩 윈도우의 변형 문제로 박스의 크기가 가변적으로 변경된는 점만 유의 하자
 
  */
-public class 연속부분수열 {
+public class 연속부분수열_4 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -30,9 +30,23 @@ public class 연속부분수열 {
             arr[i] = scanner.nextInt();
         }
 
-        System.out.println(solution(n, k, arr));
+        System.out.println(solution2(n, k, arr));
     }
 
+
+    private static int solution2(int n, int m, int[] arr) {
+        int answer = 0, sum=0, lt=0;
+
+        for (int rt = 0; rt < n; rt++) {
+            sum+=arr[rt];
+            if(sum == m) answer++;
+            while (sum >= m) {
+                sum -= arr[lt++];
+                if(sum == m) answer++;
+            }
+        }
+        return answer;
+    }
     private static int solution(int n, int k, int[] arr) {
         int answer = 0;
         int index = 0;
