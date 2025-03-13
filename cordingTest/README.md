@@ -154,3 +154,44 @@ private static int solution(int size, int count, int[] arr) {
     return answer;
 }
 ```
+
+# 재귀 함수 (recursive)
+
+- 팩토리얼 재귀함수
+```java
+private static int recursive(int n) {
+  if(n <= 1) return 1;
+  return recursive(n-1) * n;
+}
+```
+
+## 이진트리 순회 
+- 전위, 중위, 후위 순회 방법이 있으며, 부모 노드에 위치에 따라 이름이 붙일 수 있다. 
+![img.png](imgs/이진트리.png)
+```java
+private static void 전위순회(Node node) {
+    System.out.print(node.value + " ");
+    if(node.left != null) 전위순회(node.left);
+    if(node.right != null) 전위순회(node.right);
+}
+
+private static void 중위순회(Node node) {
+    if(node.left != null) 중위순회(node.left);
+    System.out.print(node.value + " ");
+    if(node.right != null) 중위순회(node.right);
+}
+
+private static void 후위순회(Node node) {
+    if(node.left != null) 후위순회(node.left);
+    if(node.right != null) 후위순회(node.right);
+    System.out.print(node.value + " ");
+}
+```
+
+## 부분집합 
+- 
+
+# DFS : 깊이우선 탐색
+# BFS : 상태트리탐색
+- 너비우선 탐색 
+![img.png](imgs/bfs.png)
