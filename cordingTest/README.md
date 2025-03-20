@@ -192,6 +192,35 @@ private static void 후위순회(Node node) {
 - 
 
 # DFS : 깊이우선 탐색
-# BFS : 상태트리탐색
 - 너비우선 탐색 
+![img.png](imgs/dfs.png)
+
+# BFS : 넒이우선탐색: 레벨 탐색
+- 레벨 탐색은 Que 를 사용한다. 
+
 ![img.png](imgs/bfs.png)
+
+```java
+private static void bfs(Node node) {
+    Queue<Node> q = new LinkedList<>();
+    q.offer(node);
+    while (!q.isEmpty()) {
+        int len = q.size();
+        for (int i = 0; i < len; i++) {
+            Node currentNode = q.poll();
+            System.out.print(currentNode.value + " ");
+            if(currentNode.left != null) q.offer(currentNode.left);
+            if(currentNode.right != null) q.offer(currentNode.right);
+        }
+    }
+}
+```
+
+# 그래프와 인접행렬
+- 무방향 그래프 
+![img.png](imgs/무방향그래프.png)
+
+- 방향 그래프 
+![img.png](imgs/방향그래프.png)
+
+- 가중치 그래프
