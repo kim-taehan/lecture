@@ -1,5 +1,7 @@
 package lecture.cordingTest.ch7;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -18,9 +20,9 @@ import java.util.Scanner;
 
  6
  */
-public class 경로탐색_인접행렬_10 {
+public class 경로탐색_인접리스트_11 {
 
-    private static int[][] graph;
+    private static List<Integer>[] graph;
     private static int[] history;
     private static int ret;
     private static int n;
@@ -29,11 +31,18 @@ public class 경로탐색_인접행렬_10 {
         n = scanner.nextInt();
         int trunk = scanner.nextInt();
 
-        graph = new int[n+1][n+1];
+        graph = new ArrayList[n + 1];//new int[n+1][n+1];
         history  = new int[n+1];
-        for (int i = 1; i <= trunk; i++) {
-            graph[scanner.nextInt()][scanner.nextInt()] = 1;
+
+        for (int i = 0; i < n + 1; i++) {
+            graph[i] = new ArrayList<>();
         }
+        for (int i = 1; i <= trunk; i++) {
+            List<Integer> list = graph[scanner.nextInt()];
+
+            list.add(scanner.nextInt());
+        }
+        history[1] = 1;
         dfs(1);
         System.out.println(ret);
     }
@@ -45,12 +54,12 @@ public class 경로탐색_인접행렬_10 {
             return;
         }
 
-        history[node] = 1;
-        for (int i = 1; i <= n; i++) {
-            if (graph[node][i] == 1 && history[i] == 0) {
+        for (Integer i : graph[node]) {
+            if (history[i] == 0) {
+                history[i] = 1;
                 dfs(i);
+                history[i] = 0;
             }
         }
-        history[node] = 0;
     }
 }
