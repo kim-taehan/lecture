@@ -58,27 +58,17 @@ public class 바둑이_승차_2 {
         for (int i = 0; i < n; i++) {
             arr[i] = scanner.nextInt();
         }
-
         dfs(0, 0);
-
         System.out.println(total);
     }
 
     private static void dfs(int index, int sum){
-
-        if (sum > max) {
-            return;
-        }
-        total = Math.max(total, sum);
+        if(index >= arr.length) return;
         int tempTotal = sum + arr[index];
-
-        int next = index+1;
-        if (next < arr.length) {
-            dfs(next, tempTotal);
-            dfs(next, sum);
-        }
-        else if(tempTotal <= max){
+        if (tempTotal <= max) {
             total = Math.max(total, tempTotal);
+            dfs(index+1, tempTotal);
         }
+        dfs(index+1, sum);
     }
 }
