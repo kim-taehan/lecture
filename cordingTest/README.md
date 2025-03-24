@@ -226,7 +226,7 @@ private static void bfs(Node node) {
 - 가중치 그래프
 
 # ch8 
-## 합이 같은 부분집합 (DFS)
+## 1 합이 같은 부분집합 (DFS)
 > 설명
 N개의 원소로 구성된 자연수 집합이 주어지면, 이 집합을 두 개의 부분집합으로 나누었을 때
 두 부분집합의 원소의 합이 서로 같은 경우가 존재하면 “YES"를 출력하고, 그렇지 않으면 ”NO"를 출력하는 프로그램을 작성하세요.  
@@ -284,5 +284,158 @@ public class 경로탐색_인접리스트_11 {
             }
         }
     }
+}
+```
+
+## 2 바둑이 승자 DFS
+### 설명
+> 철수는 그의 바둑이들을 데리고 시장에 가려고 한다. 그런데 그의 트럭은 C킬로그램 넘게 태울수가 없다.  
+철수는 C를 넘지 않으면서 그의 바둑이들을 가장 무겁게 태우고 싶다.  
+N마리의 바둑이와 각 바둑이의 무게 W가 주어지면, 철수가 트럭에 태울 수 있는 가장 무거운 무게를 구하는 프로그램을 작성하세요.
+
+### 풀이 
+- DFS 로 깊이 탐색을 하면서 C 를 넘지않는 무게를 계속 측정한다. 
+- 이 경우도 for 문 전체를 찾는 것이 아니라 다음 index 만 찾는 결정 알고리즘과 비슷
+
+### 주의
+- 제한조건을 걸다가 계속 빠지는 데이터가 발생할 수 있음
+- 배열의 index 길이 고민
+
+```java
+private static void dfs(int index, int sum){
+    if(index >= arr.length) return;
+    int tempTotal = sum + arr[index];
+    if (tempTotal <= max) {
+        total = Math.max(total, tempTotal);
+        dfs(index+1, tempTotal);
+    }
+    // 주의 tempTotal 생각하다가 이부분에서 계속 빠지는 데이터가 발생함 
+    dfs(index+1, sum);
+}
+```
+### 3 최대점수구하기
+#### 설명
+> 이번 정보올림피아드대회에서 좋은 성적을 내기 위하여 현수는 선생님이 주신 N개의 문제를 풀려고 합니다.  
+    각 문제는 그것을 풀었을 때 얻는 점수와 푸는데 걸리는 시간이 주어지게 됩니다.  
+    제한시간 M안에 N개의 문제 중 최대점수를 얻을 수 있도록 해야 합니다.    
+    (해당문제는 해당시간이 걸리면 푸는 걸로 간주한다, 한 유형당 한개만 풀 수 있습니다.)
+
+#### 풀이
+- 최대점수를 DFS 알고리즘을 사용하여 구하는 문제 
+- score, min 배열을 따로 정의하는 것 이외에는 DPS 특이사항 없다. 
+
+```java
+private static void solution(int index, int score, int min) {
+    if (min > m) return;
+    if (index == scores.length) {
+        answer = Math.max(answer, score);
+    } else {
+        solution(index+1, score+scores[index], min+mines[index]);
+        solution(index+1, score, min);
+    }
+}
+```
+### 4 중복순열구하기 
+#### 설명
+> 1부터 N까지 번호가 적힌 구슬이 있습니다. 이 중 중복을 허락하여 M번을 뽑아 일렬로 나열 하는 방법을 모두 출력합니다
+
+#### 풀이
+- dfs 방식을 사용하여 순차적으로 중복 순열을 추출한다. 
+
+```java
+static void dfs(int depth){
+    if (depth == M) {
+        addList();
+    } else {
+        for (int i = 1; i <= N; i++) {
+            pm[depth] = i;
+            dfs(depth + 1);
+        }
+    }
+}
+```
+
+### 5 동전구하기
+#### 설명
+> 다음과 같이 여러 단위의 동전들이 주어져 있을때 거스름돈을 가장 적은 수의 동전으로 교환해주려면 어떻게 주면 되는가?
+각 단위의 동전은 무한정 쓸 수 있다.
+
+#### 풀이 
+- 가장 적은 수, 최소 몇번에 이런 문제는 BFS 를 사용하여 풀이할 수 있다. 
+- 일반적인 문제와 차이점은 동일한 item 을 무한이 사용할 수 있다는 점이다.
+```java
+static int bfs() {
+    Queue<Integer> arrayDeque = new ArrayDeque<>();
+    int level = 0;
+    for (int coin : coins) {
+        arrayDeque.add(coin);
+    }
+
+    while (!arrayDeque.isEmpty()) {
+        level++;
+        int len = arrayDeque.size();
+        for (int i = 0; i < len; i++) {
+            Integer item = arrayDeque.poll();
+            if (item == M) return level;
+            // 거스름돈보다 큰경우에는 스킵한다.
+            else if (item < M){
+                for (int coin : coins) {
+                    arrayDeque.add(item + coin);
+                }
+            }
+            
+        }
+    }
+    return 0;
+}
+```
+
+
+### 6 순열구하기
+> 10이하의 N개의 자연수가 주어지면 이 중  M개를 뽑아 일렬로 나열하는 방법을 모두 출력합니다.
+
+#### 풀이 
+- 중복 순열과 다르게 중복을 허용하지 않는 것만 조심하여 처리하면 된다. DFS 방식으로
+- 배열이 아닌 리스트를 사용한 이유는 remove, contain 같은 Collection 메서드를 사용하기 위해 
+- 입력 순서를 보장하는 Set을 사용해도 될 것 같아
+- 배열 check 하는 데이터를 만들어서 처리해도 된다. (리스트 사용하지 않고..)
+
+```java
+static void dfs(int l, List<Integer> list) {
+
+    if (l == M) {
+        for (Integer i : list) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    } else {
+        for (int i = 0; i < N; i++) {
+            if(!list.contains(arr[i])){
+                list.add(arr[i]);
+                dfs(l + 1, list);
+                list.remove(l);
+            }
+        }
+    }
+}
+```
+
+### 7 조합의 경우의 수
+### 설명 
+> 재귀를 이용해 조합수를 구해주는 프로그램을 작성하세요.
+
+### 풀이 
+- 중복 가능한 n개중에서 r개를 선택하는 경우의 수를 구하는 방법
+- 별도의 공식이 존재하지만 재귀를 이용하여 조합수를 구할 수 있다. 
+- r=1 으로 1개를 선택하는 경우 당연하게 n개의 방법이 존재
+- n=r 인 경우에 예를 들어 3개중에서 3개를 선택하는 경우기에 1개 방법만 존재 
+- 이를 이용하여 다음과 같이 풀이를 할 수 있다.
+- 강의를 듣고 이전에 계산 값을 저장하는 배열만 추가하자
+
+```java
+static int recursion(int n, int r) {
+    if(r == 1) return n;
+    if(n == r) return 1;
+    return recursion(n - 1, r - 1) + recursion(n - 1, r);
 }
 ```
