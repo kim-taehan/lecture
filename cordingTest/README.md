@@ -439,3 +439,67 @@ static int recursion(int n, int r) {
     return recursion(n - 1, r - 1) + recursion(n - 1, r);
 }
 ```
+
+### 10. 미로 탐색 
+#### 설명 
+> 7*7 격자판 미로를 탈출하는 경로의 가지수를 출력하는 프로그램을 작성하세요.    
+> 출발점은 격자의 (1, 1) 좌표이고, 탈출 도착점은 (7, 7)좌표이다. 격자판의 1은 벽이고, 0은 통로이다.   
+> 격자판의 움직임은 상하좌우로만 움직인다
+
+#### 풀이 
+- 전체 경로의 길이를 구하는 문제로 DFS 방식으로 풀이할 수 있다. 
+- 방문가능한 노드를 방문하면서 최종 노드에 도착하면 ret ++ 하는 방식
+```java
+static void dfs(int y, int x) {
+    if (x == COUNT - 1 && y == COUNT - 1) {
+        ret++;
+    } else {
+        for (int i = 0; i < 4; i++) {
+            int y2 = y + Y[i];
+            int x2 = x + X[i];
+            if (x2 >= 0 && y2 >= 0 && x2 < 7 && y2 < 7 && miro[y2][x2] == 0) {
+                miro[y2][x2] = 1;
+                dfs(y2, x2);
+                miro[y2][x2] = 0;
+            }
+        }
+    }
+}
+```
+
+### 11. 미로최단 검색 
+#### 설명 
+>  7*7 격자판 미로를 탈출하는 최단경로의 길이를 출력하는 프로그램을 작성하세요.   
+> 경로의 길이는 출발점에서 도착점까지 가는데 이동한 횟수를 의미한다.   
+> 출발점은 격자의 (1, 1) 좌표이고, 탈출 도착점은 (7, 7)좌표이다. 격자판의 1은 벽이고, 0은 도로이다
+> 좀 더 빨리 찾기 위해서 경로는 탐색하는 순서를 우 > 좌, 하 > 상으로 하는게 더 빠르게 찾을 수 있다.
+> dis[nx][ny] = dis[x][y] + 1;
+#### 풀이 
+- 최단 거리는 BFS 방식으로 풀이할 수 있다. 
+- Queue 를 사용하여 처리하고 있으면 Level 마다 체크하고 결과가 나오면 강제 종료하자 
+
+```java
+static int bfs() {
+
+    Queue<Point> points = new ArrayDeque<>();
+    points.add(new Point(0, 0));
+
+    while (!points.isEmpty()) {
+        int len = points.size();
+        for (int i = 0; i < len; i++) {
+            Point point = points.poll();
+            if(point.isLast()) {
+                return L;
+            } else {
+                miro[point.x][point.y] = 1;
+                for (int j = 0; j < 4; j++) {
+                    Point next = point.next(X[j], Y[j]);
+                    if (next.isNode()) points.add(next);
+                }
+            }
+        }
+        L++;
+    }
+    return 0;
+}
+```
