@@ -51,7 +51,6 @@ public class 원더랜드_프림_7 {
 
         boolean[] visited = new boolean[n + 1];
 
-
         List<List<Node>> nodes = new ArrayList<>();
         for (int i = 0; i <= n; i++) {
             nodes.add(new ArrayList<>());
