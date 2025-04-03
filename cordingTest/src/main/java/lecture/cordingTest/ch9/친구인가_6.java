@@ -85,6 +85,7 @@ public class 친구인가_6 {
         if (arr[i] == i) {
             return i;
         }
-        return find(arr, arr[i]);
+        // 압축기법 (기억하자) 경로압축!!!!
+        return arr[i] = find(arr, arr[i]);
     }
 }
