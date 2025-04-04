@@ -45,13 +45,13 @@ public class 뒤집은소수_6 {
         return result;
     }
 
-    private static boolean isPrime(int reverseNumber) {
-        if (reverseNumber < 2) {
+    private static boolean isPrime(int number) {
+        if (number < 2) {
             return false;
         }
 
-        for (int i = 2; i < reverseNumber; i++) {
-            if (reverseNumber % i == 0) {
+        for (int i = 2; i < number; i++) {
+            if (number % i == 0) {
                 return false;
             }
         }

@@ -1,9 +1,7 @@
 package lecture.cordingTest.ch5StackAndQueue;
 
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Scanner;
+import java.util.*;
 
 /*
 (()(()))(()
@@ -18,6 +16,7 @@ YES
 public class 올바른_괄호_1 {
 
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         String text = scanner.next();
 
@@ -28,7 +27,6 @@ public class 올바른_괄호_1 {
     public static String solution(String text) {
 
         Deque<Character> deque = new ArrayDeque<>();
-
         for (char c : text.toCharArray()) {
             if(c == '(') {
                 deque.push(c);

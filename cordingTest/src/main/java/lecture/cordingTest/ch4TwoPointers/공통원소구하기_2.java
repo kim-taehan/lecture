@@ -36,23 +36,20 @@ public class 공통원소구하기_2 {
     }
 
     private static List<Integer> solution(int arrACnt, int[] arrA, int arrBCnt, int[] arrB) {
-
         Arrays.sort(arrA);
         Arrays.sort(arrB);
 
         List<Integer> answer = new ArrayList<>();
-
-        int indexA = 0, indexB = 0;
-        while(indexA < arrACnt && indexB < arrBCnt) {
-
-            if (arrA[indexA] == arrB[indexB]) {
-                answer.add(arrA[indexA++]);
-                indexB++;
+        int left = 0, rigth = 0;
+        while(left < arrACnt && rigth < arrBCnt) {
+            if (arrA[left] == arrB[rigth]) {
+                answer.add(arrA[left++]);
+                rigth++;
             }
-            else if (arrA[indexA] > arrB[indexB]) {
-                indexB++;
+            else if (arrA[left] > arrB[rigth]) {
+                rigth++;
             } else {
-                indexA++;
+                left++;
             }
         }
         return answer;

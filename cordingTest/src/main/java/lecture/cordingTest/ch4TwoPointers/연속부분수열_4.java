@@ -36,7 +36,6 @@ public class 연속부분수열_4 {
 
     private static int solution2(int n, int m, int[] arr) {
         int answer = 0, sum=0, lt=0;
-
         for (int rt = 0; rt < n; rt++) {
             sum+=arr[rt];
             if(sum == m) answer++;

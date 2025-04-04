@@ -1,6 +1,7 @@
 package lecture.cordingTest.ch5StackAndQueue;
 
 import java.util.ArrayDeque;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -40,7 +41,6 @@ public class 응급실_8 {
 
     private static int solution(int n, int cnt, int[] arr) {
         int order = 0;
-
         Queue<Person> queue = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
             queue.offer(new Person(i, arr[i]));

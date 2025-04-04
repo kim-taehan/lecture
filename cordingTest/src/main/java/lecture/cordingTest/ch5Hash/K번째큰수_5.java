@@ -34,6 +34,7 @@ public class K번째큰수_5 {
                 }
             }
         }
+
         int t=1;
         for (Integer i : treeSet) {
             if (index == t++) {

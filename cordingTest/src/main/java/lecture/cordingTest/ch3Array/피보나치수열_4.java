@@ -19,9 +19,9 @@ public class 피보나치수열_4 {
     }
     public static int[] solution(int size) {
         int[] result = new int[size];
-        result[0] = 1;
         result[1] = 1;
-        for (int i = 2; i < size; i++) {
+        result[2] = 1;
+        for (int i = 3; i < size; i++) {
             result[i] = result[i - 1] + result[i - 2];
         }
         return result;
