@@ -230,6 +230,10 @@ private static int solution(String text) {
 - 먼저 입력된 데이터가 먼저 나가는 구조인 Queue 
 - `Queue<Integer> queue = new ArrayDeque<>()` 인터페이스를 사용하고 구현체는 ArrayDeque 를 사용하자
 
+
+## ex 왕자 뽑기
+- N 명의 왕자들이 원형으로 앉아서 순서대로 번호를 말하는 데 K번째 번호를 말한 친구는 제외되는 게임 
+- Queue 를 사용하여 마지막 1인이 남을 때까지 진행하는 게임
 ```java
 private static int solution(int n, int k) {
 
@@ -245,5 +249,100 @@ private static int solution(int n, int k) {
         queue.poll();
     }
     return queue.poll();
+}
+```
+
+
+# 6 정렬
+![img_1.png](imgs/sort.png)
+
+## 6.1 선택 정렬
+- 해당 순서에 원소를 넣을 위치는 이미 정해져 있고, 어떤 원소를 넣을지 선택하는 알고리즘
+- 첫 번째 순서에는 첫 번째 위치에 가장 최솟값을 넣는다.
+- 두 번째 순서에는 두 번째 위치에 남은 값 중에서의 최솟값을 넣는다.
+
+```java
+private static int[] 선택정렬(int[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+        int selectedIndex = i;
+        for (int j = i + 1; j < arr.length; j++) {
+            if (arr[j] < arr[selectedIndex]) {
+                selectedIndex = j;
+            }
+        }
+        if (selectedIndex != i) {
+            int temp = arr[i];
+            arr[i] = arr[selectedIndex];
+            arr[selectedIndex] = temp;
+        }
+    }
+    return arr;
+}
+```
+
+## 6.2 버블 정렬
+- 서로 인접한 두 원소를 검사하여 정렬하는 알고리즘
+  인접한 2개의 레코드를 비교하여 크기가 순서대로 되어 있지 않으면 서로 교환한다.
+- 주의사항: 회차 종료시마다 마지막 데이터가 정렬되는 방법이다. 
+
+```java
+private static int[] 버블정렬(int[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+        for (int j = i + 1; j < arr.length; j++) {
+            if (arr[i] > arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    return arr;
+}
+```
+
+## 6.3 삽입정렬
+- 삽입 정렬은 두 번째 자료부터 시작하여 그 앞(왼쪽)의 자료들과 비교하여 삽입할 위치를 지정한 후 자료를 뒤로 옮기고 지정한 자리에 자료를
+  삽입하여 정렬하는 알고리즘이다.
+- 어느 정도 정렬되어 있는 배열을 정렬할 때 속도가 향상 된다. 
+
+```java
+private static int[] 삽입정렬(int[] arr) {
+    for (int i = 1; i < arr.length; i++) {
+        int temp = arr[i];
+        int j = i-1;
+        for (; j >= 0; j--) {
+            if (arr[j] > temp) {
+                arr[j+1] = arr[j];
+            } else break;
+        }
+        arr[j+1] = temp;
+    }
+    return arr;
+}
+```
+
+## 6.4 쉘 정렬
+- 삽입 정렬이 어느 정도 정렬된 배열에 대해서는 대단히 빠른 것에 착안하여 삽입 정렬을 보안한 방법
+- 일반적인 삽입 정렬을 하기전에 gap (n/2) 을 통해 미리 멀리 있는 값 들을 미리 교환하는 작업
+```java
+static int[] 쉘정렬(int[] arr) {
+    int n = arr.length;
+
+    // 초기 gap 설정 (보통 n/2부터 시작해서 1까지 감소)
+    for (int gap = n / 2; gap > 0; gap /= 2) {
+
+        // gap 만큼 떨어진 요소들끼리 삽입 정렬 수행
+        for (int i = gap; i < n; i++) {
+            int temp = arr[i];
+            int j;
+
+            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap) {
+                arr[j] = arr[j - gap];
+            }
+
+            arr[j] = temp;
+        }
+    }
+    return arr;
 }
 ```

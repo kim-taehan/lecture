@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 5 6 7 9 10 11
  */
-public class 삽입정렬_1 {
+public class 삽입정렬_3 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

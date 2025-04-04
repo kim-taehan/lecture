@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 5 7 11 13 15 23
  */
-public class 선택정렬_3 {
+public class 선택정렬_1 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
