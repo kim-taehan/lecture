@@ -254,8 +254,7 @@ private static int solution(int n, int k) {
 
 
 # 6 정렬
-![img_1.png](imgs/sort.png)
-
+![img.png](imgs/sort.png)
 ## 6.1 선택 정렬
 - 해당 순서에 원소를 넣을 위치는 이미 정해져 있고, 어떤 원소를 넣을지 선택하는 알고리즘
 - 첫 번째 순서에는 첫 번째 위치에 가장 최솟값을 넣는다.
@@ -346,3 +345,155 @@ static int[] 쉘정렬(int[] arr) {
     return arr;
 }
 ```
+
+## 6.5 퀵 정렬
+- 퀵 정렬은 말 그대로 "빠른 정렬"로 분할 정복(Divide and Conquer) 방식으로 동작
+- 하나의 피벗(Pivot) 을 선택하고 피벗보다 작은 값은 왼쪽, 큰 값은 오른쪽으로 분할해 양쪽을 재귀적으로 계속 정렬하는 방식!
+
+```java
+public static void quickSort(int[] arr, int low, int high) {
+    if (low < high) {
+        // 분할 위치를 기준으로 정렬
+        int pivotIndex = partition(arr, low, high);
+
+        quickSort(arr, low, pivotIndex - 1);   // 왼쪽 부분 정렬
+        quickSort(arr, pivotIndex + 1, high);  // 오른쪽 부분 정렬
+    }
+}
+
+private static int partition(int[] arr, int low, int high) {
+    int pivot = arr[high]; // 마지막 요소를 피벗으로 선택
+    int i = low - 1;       // 작은 요소들의 끝 인덱스
+
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            swap(arr, ++i, j); // 작거나 같은 요소를 왼쪽으로 이동
+        }
+    }
+
+    swap(arr, i + 1, high); // 피벗을 중앙으로 이동
+    return i + 1;           // 피벗의 인덱스 반환
+}
+```
+
+## 6.6 병합 정렬
+- 병합 정렬은 "분할하고 합친다" 가 핵심으로 먼저 배열을 최소 단위(1개짜리) 로 쪼개고 쪼갠 배열들을 정렬하면서 합친다.
+- 약간 투포인트 알고리즘으로 사용함 
+
+```java
+public void sort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        // 왼쪽 반 정렬
+        sort(arr, left, mid);
+        // 오른쪽 반 정렬
+        sort(arr, mid + 1, right);
+
+        // 두 개를 병합
+        merge(arr, left, mid, right);
+    }
+}
+
+// 두 개의 배열을 병합하는 함수
+private void merge(int arr[], int left, int mid, int right) {
+    // 왼쪽, 오른쪽 길이
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    // 임시 배열 생성
+    int L[] = new int[n1];
+    int R[] = new int[n2];
+
+    // 데이터 복사
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    // 병합
+    int i = 0, j = 0;
+    int k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    // 남은 데이터 복사
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+```
+
+## 6.7 힙 정렬
+- 힙 정렬은 완전 이진 트리(Complete Binary Tree) 구조를 이용하는 정렬
+- 힙(Heap) : 부모 노드가 자식 노드보다 크거나(최대 힙, Max-Heap) 작아야(최소 힙, Min-Heap) 하는 성질을 가진 트리
+- 힙 정렬은 최대 힙을 만들어서 가장 큰 값을 뽑아내고, 나머지 요소들에 대해 다시 힙을 구성하는 식으로 동작
+
+### 과정
+- 주어진 배열을 최대 힙(Max-Heap) 구조로 만든다.
+- 루트(가장 큰 값)를 맨 마지막 값과 교환한다.
+- 교환한 후, 힙 사이즈를 줄이고 다시 최대 힙을 만든다.
+
+```java
+public void sort(int[] arr) {
+    int n = arr.length;
+
+    // 1. 배열을 최대 힙으로 만든다
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    // 2. 힙에서 요소를 하나씩 꺼내어 정렬
+    for (int i = n - 1; i > 0; i--) {
+        // 현재 루트(최대값)를 끝으로 보낸다
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+
+        // 줄어든 힙에서 다시 최대 힙 구성
+        heapify(arr, i, 0);
+    }
+}
+
+// 힙을 유지하는 함수
+void heapify(int[] arr, int n, int i) {
+    int largest = i;        // 루트를 가장 큰 값으로 초기화
+    int left = 2 * i + 1;    // 왼쪽 자식
+    int right = 2 * i + 2;   // 오른쪽 자식
+
+    // 왼쪽 자식이 루트보다 크면 largest 업데이트
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    // 오른쪽 자식이 largest보다 크면 largest 업데이트
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    // largest가 루트가 아니면 교환
+    if (largest != i) {
+        int swap = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = swap;
+
+        // 교환한 자식 노드를 기준으로 다시 heapify
+        heapify(arr, n, largest);
+    }
+}
+```
+
+## 6.9 결정 알고리즘 
+
