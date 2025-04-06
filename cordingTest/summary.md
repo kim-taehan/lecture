@@ -350,6 +350,12 @@ static int[] 쉘정렬(int[] arr) {
 - 퀵 정렬은 말 그대로 "빠른 정렬"로 분할 정복(Divide and Conquer) 방식으로 동작
 - 하나의 피벗(Pivot) 을 선택하고 피벗보다 작은 값은 왼쪽, 큰 값은 오른쪽으로 분할해 양쪽을 재귀적으로 계속 정렬하는 방식!
 
+### 퀵정렬 동작 방식
+- 1 피벗(Pivot) 선택 : 리스트에서 기준이 될 피벗 하나를 선택
+- 2 분할(Divide) : 피벗보다 작은 값들은 왼쪽, 큰 값들은 오른쪽으로 분할
+- 3 재귀 호출(Conquer) : 왼쪽, 오른쪽 각각의 리스트에 대해 다시 퀵정렬을 적용
+- 4 정렬 완료(Combine) : 모든 분할이 끝나면, 자연스럽게 정렬된 리스트가 완성
+
 ```java
 public static void quickSort(int[] arr, int low, int high) {
     if (low < high) {
@@ -380,6 +386,12 @@ private static int partition(int[] arr, int low, int high) {
 - 병합 정렬은 "분할하고 합친다" 가 핵심으로 먼저 배열을 최소 단위(1개짜리) 로 쪼개고 쪼갠 배열들을 정렬하면서 합친다.
 - 약간 투포인트 알고리즘으로 사용함 
 
+
+### 동작 방식
+- 배열을 반으로 쪼개! (재귀적으로 계속 쪼갬)
+- 쪼갠 배열이 1개짜리(혹은 0개) 될 때까지 반복.
+- 둘씩 합치면서 정렬해가면서 붙여나간다. (2포인트 방식)
+- 
 ```java
 public void sort(int arr[], int left, int right) {
     if (left < right) {
@@ -496,4 +508,37 @@ void heapify(int[] arr, int n, int i) {
 ```
 
 ## 6.9 결정 알고리즘 
+- "YES" or "NO"로 답할 수 있는 문제를 푸는 알고리즘
+- 어떤 문제를 풀 때, 답을 찾는 대신 주어진 조건을 만족하는지 "결정(판단)"만 해보는 거야.
 
+| 문제| 방법     |
+| -|--------|  
+| 최소한의 비용으로 연결 가능한가| YES/NO |  
+| 이 크기로 배열을 나눌 수 있는가| YES/NO  |  
+| 이 거리로 사람을 배치할 수 있는가| YES/NO |  
+
+### ex 랜선 자르기 
+- 너는 K개의 랜선을 가지고 있어. 이걸 잘라서 N개 이상의 랜선을 만들어야 해. 최대한 긴 랜선을 만들고 싶어.
+```java
+private static int solution(int low, int high, int[] arr, int N) {
+    int answer = 0;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (count(arr, mid) >= N) {
+            answer = mid;
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return answer;
+}
+
+private static int count(int[] arr, int mid) {
+    int count = 0;
+    for (int line : arr) {
+        count += line / mid;
+    }
+    return count;
+}
+```

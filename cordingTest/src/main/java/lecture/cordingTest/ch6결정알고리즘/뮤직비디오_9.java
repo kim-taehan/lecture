@@ -1,4 +1,4 @@
-package lecture.cordingTest.ch6Sort;
+package lecture.cordingTest.ch6결정알고리즘;
 
 import java.util.Arrays;
 import java.util.Scanner;
