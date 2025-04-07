@@ -542,3 +542,70 @@ private static int count(int[] arr, int mid) {
     return count;
 }
 ```
+
+# 7 BFS, DFS 기초
+## 7.1 재귀 함수 
+
+### 7.1.1 팩토리얼 
+- 1부터 자기 자신까지의 곱 연산을 뜻한다.
+- 5! = 5 * 4 * 3 * 2 * 1
+```java
+private static int recursive(int n) {
+    if(n == 1) return 1;
+    return n * recursive(n - 1);
+}
+```
+
+### 7.1.2 피보나치 수열 
+- 피보나치 수열이란 앞의 2개의 수를 합하여 다음 숫자가 되는 수열이다. 
+- 이미 구한 값은 다시 계산하지 않는다.
+
+```java
+private static int recursive(int n) {
+    if(fibo[n] != 0) return fibo[n];
+    if(n <= 2) return fibo[n] = 1;
+    return fibo[n] = recursive(n - 1) + recursive(n - 2);
+}
+```
+
+### 7.1.3 이진 트리 순회 
+- 아래와 같이 이진 트리가 주어 졌을 때 전위, 중위, 후위 순회를 할 수 있다.
+- 전, 중 , 후 위는 무모 트리 기준으로 생각하면 된다. 
+
+![img.png](imgs/이진트리.png)
+
+#### 7.1.3.1 전위 순회
+- 1 2 4 5 3 6 7
+
+```java
+private static void 전위순회(Node node) {
+    System.out.print(node.value + " ");
+    if(node.left != null) 전위순회(node.left);
+    if(node.right != null) 전위순회(node.right);
+}
+```
+
+#### 7.1.3.2 중위 순회
+- 4 2 5 1 6 3 7
+```java
+private static void 중위순회(Node node) {
+    if(node.left != null) 중위순회(node.left);
+    System.out.print(node.value + " ");
+    if(node.right != null) 중위순회(node.right);
+}
+```
+
+
+#### 7.1.3.3 후위 순회
+- 4 5 2 6 7 3 1
+```java
+private static void 후위순회(Node node) {
+    if(node.left != null) 후위순회(node.left);
+    if(node.right != null) 후위순회(node.right);
+    System.out.print(node.value + " ");
+}
+```
+
+
+
+
