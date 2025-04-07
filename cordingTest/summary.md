@@ -607,5 +607,138 @@ private static void 후위순회(Node node) {
 ```
 
 
+## 7.2 DFS (Depth-First Search)
+- 이름 그대로 "깊이"를 먼저 탐색하는 방법
+- 보통 Stack(스택) 이나 재귀 호출로 구현
+- 경로의 모든 경우 탐색에 좋음
+ 
+### DFS 탐색 순서
+- 시작 노드 방문 처리.
+- 인접한 노드 중 방문 안 한 거 있으면 바로 이동.
+- 갈 데 없으면 되돌아오기.
+```java
+void dfs(int node, boolean[] visited) {
+    visited[node] = true;
+    System.out.print(node + " ");
+
+    for (int next : graph.get(node)) {
+        if (!visited[next]) {
+            dfs(next, visited);
+        }
+    }
+}
+```
 
 
+### ex 경로 탐색 (DFS)
+- 방향 그래프가 주어지면 1번 정점에서 N번 정점으로 가는 모든 가지 수를 출력하는 프로그램 
+
+```java
+private static void dfs(int node) {
+
+    if (node == n) {
+        ret++;
+        return;
+    }
+
+    history[node] = 1;
+    for (int i = 1; i <= n; i++) {
+        if (graph[node][i] == 1 && history[i] == 0) {
+            dfs(i);
+        }
+    }
+    history[node] = 0;
+}
+```
+
+## 7.3 BFS (Breadth-First Search)
+- 이름 그대로 "너비"를 먼저 탐색하는 방법
+- 가까운 노드부터 방문
+- 보통 Queue(큐) 자료구조를 사용
+
+### BFS 탐색 순서
+- 시작 노드를 큐에 넣고 방문 처리.
+- 큐에서 하나 꺼내서 그 노드의 인접 노드를 전부 큐에 넣음 (아직 안 갔다면)
+- 큐가 빌 때까지 반복!
+
+```java
+void bfs(int start) {
+    Queue<Integer> queue = new LinkedList<>();
+    boolean[] visited = new boolean[n + 1];
+
+    queue.add(start);
+    visited[start] = true;
+
+    while (!queue.isEmpty()) {
+        int node = queue.poll();
+        System.out.print(node + " ");
+
+        for (int next : graph.get(node)) {
+            if (!visited[next]) {
+                visited[next] = true;
+                queue.add(next);
+            }
+        }
+    }
+}
+```
+
+
+### ex 그래프 최단 거리
+
+```java
+private static void bfs(int node) {
+    Queue<Integer> queue = new ArrayDeque<>();
+    queue.add(node);
+    while (!queue.isEmpty()) {
+        int len = queue.size();
+        for (int i = 0; i < len; i++) {
+            Integer currentNode = queue.poll();
+            for (Integer integer : graph[currentNode]) {
+                if (distance[integer] == 0 && integer != node) {
+                    distance[integer] = distance[currentNode] + 1;
+                    queue.add(integer);
+                }
+            }
+        }
+    }
+}
+```
+
+# 8 DFS, BFS 활용
+- DFS, BFS 를 활용하는 문제로 예제 위주로 정리
+
+## ex1 바둑이 승자 
+- 철수는 그의 바둑이들을 데리고 시장에 가려고 한다. 그런데 그의 트럭은 C킬로그램 넘게 태울수가 없다.
+- 철수는 C를 넘지 않으면서 그의 바둑이들을 가장 무겁게 태우고 싶다.
+- N마리의 바둑이와 각 바둑이의 무게 W가 주어지면, 철수가 트럭에 태울 수 있는 가장 무거운 무게를 구하는 프로그램을 작성하세요.
+
+### 풀이 
+- 결정 알고리즘 문제처럼 볼 수 있지만 결과적으로 모든 데이터를 확인해야 되기 때문에 DFS 로 처리해야 한다. 
+
+```java
+private static void dfs(int index, int sum){
+    if (index >= arr.length) return;
+    int tempTotal = sum + arr[index];
+    if (tempTotal <= max) {
+        total = Math.max(total, tempTotal);
+        dfs(index+1, tempTotal);
+    }
+    dfs(index+1, sum);
+}
+```
+
+## ex 최대점수구하기 
+- 제한시간 M안에 N개의 문제 중 최대점수를 얻을 수 있도록 해야 합니다.
+
+```java
+private static void dfs(int index, int score, int min) {
+    if (min > m) return;
+    if (index == scores.length) {
+        answer = Math.max(answer, score);
+    } else {
+        dfs(index+1, score+scores[index], min+mines[index]);
+        dfs(index+1, score, min);
+    }
+}
+```

@@ -73,8 +73,6 @@ public class 그래프최단거리_12 {
                         queue.add(integer);
                     }
                 }
-
-
             }
         }
     }
