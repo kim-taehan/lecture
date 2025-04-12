@@ -630,26 +630,6 @@ void dfs(int node, boolean[] visited) {
 ```
 
 
-### ex 경로 탐색 (DFS)
-- 방향 그래프가 주어지면 1번 정점에서 N번 정점으로 가는 모든 가지 수를 출력하는 프로그램 
-
-```java
-private static void dfs(int node) {
-
-    if (node == n) {
-        ret++;
-        return;
-    }
-
-    history[node] = 1;
-    for (int i = 1; i <= n; i++) {
-        if (graph[node][i] == 1 && history[i] == 0) {
-            dfs(i);
-        }
-    }
-    history[node] = 0;
-}
-```
 
 ## 7.3 BFS (Breadth-First Search)
 - 이름 그대로 "너비"를 먼저 탐색하는 방법
@@ -677,28 +657,6 @@ void bfs(int start) {
             if (!visited[next]) {
                 visited[next] = true;
                 queue.add(next);
-            }
-        }
-    }
-}
-```
-
-
-### ex 그래프 최단 거리
-
-```java
-private static void bfs(int node) {
-    Queue<Integer> queue = new ArrayDeque<>();
-    queue.add(node);
-    while (!queue.isEmpty()) {
-        int len = queue.size();
-        for (int i = 0; i < len; i++) {
-            Integer currentNode = queue.poll();
-            for (Integer integer : graph[currentNode]) {
-                if (distance[integer] == 0 && integer != node) {
-                    distance[integer] = distance[currentNode] + 1;
-                    queue.add(integer);
-                }
             }
         }
     }
