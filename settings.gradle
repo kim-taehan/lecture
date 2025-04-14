@@ -1,4 +1,6 @@
 rootProject.name = 'lecture'
 include 'java-mid2'
 include 'cordingTest'
+include 'object'
+include 'object'
 
