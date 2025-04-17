@@ -3,4 +3,5 @@ include 'java-mid2'
 include 'cordingTest'
 include 'object'
 include 'object'
+include 'java-adv3'
 
