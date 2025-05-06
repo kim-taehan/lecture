@@ -9,8 +9,8 @@ import java.util.concurrent.RecursiveTask;
 
 public class SumTask extends RecursiveTask<Integer> {
 
-    private static final int THRESHOLD = 4;
-
+//    private static final int THRESHOLD = 4;
+private static final int THRESHOLD = 2;
     private final List<Integer> list;
 
     public SumTask(List<Integer> list) {
@@ -31,12 +31,13 @@ public class SumTask extends RecursiveTask<Integer> {
             int mid = list.size() / 2;
             List<Integer> left = list.subList(0, mid);
             List<Integer> right = list.subList(mid, list.size());
+            MyLogger.log("[분할] " + left +" / " + right);
 
             SumTask leftTask = new SumTask(left);
             SumTask rightTask = new SumTask(right);
 
-            Integer compute = rightTask.compute();
             ForkJoinTask<Integer> fork = leftTask.fork();
+            Integer compute = rightTask.compute();
 
             Integer join = fork.join();
             return compute + join;
