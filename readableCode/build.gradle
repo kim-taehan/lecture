@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group = 'developx.mybatis'
+version = 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    annotationProcessor files('build/classes/java/main')  //
+}
+
+test {
+    useJUnitPlatform()
+}
