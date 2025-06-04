@@ -2,6 +2,9 @@ package lecture.readableCode.minesweeper.tobe.io;
 
 import lecture.readableCode.minesweeper.tobe.GameBoard;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 public class ConsoleOutputHandler {
 
     public void showGameStartComments() {
@@ -11,15 +14,26 @@ public class ConsoleOutputHandler {
     }
 
     public void showBoard(GameBoard board) {
-        System.out.println("   a b c d e f g h i j");
+
+        List<String> alphabets = generateColAlphabet(board);
+        String joiningAlphabet = String.join(" ", alphabets);
+        System.out.println("    " + joiningAlphabet);
+
         for (int row = 0; row < board.getRowSize(); row++) {
-            System.out.printf("%d  ", row + 1);
+            System.out.printf("%2d  ", row + 1);
             for (int col = 0; col < board.getColSize(); col++) {
                 System.out.print(board.getSign(row,col)  + " ");
             }
             System.out.println();
         }
         System.out.println();
+    }
+
+    private List<String> generateColAlphabet(GameBoard board) {
+        return IntStream.range(0, board.getColSize())
+                .mapToObj(index -> (char) ('a' + index))
+                .map(Object::toString)
+                .toList();
     }
 
     public void printGameWinningComment() {
