@@ -1,6 +1,7 @@
 package lecture.readableCode.minesweeper.tobe;
 
-public class Cell {
+@Deprecated
+public class CellOld {
 
     private static final String FLAG_SIGN = "⚑";
     private static final String LAND_MINE_SIGN = "☼";
@@ -12,18 +13,18 @@ public class Cell {
     private boolean isFlagged;
     private boolean isOpened;
 
-    public Cell(int nearbyLandMineCount, boolean isLandMine, boolean isFlagged, boolean isOpened) {
+    public CellOld(int nearbyLandMineCount, boolean isLandMine, boolean isFlagged, boolean isOpened) {
         this.nearbyLandMineCount = nearbyLandMineCount;
         this.isLandMine = isLandMine;
         this.isFlagged = isFlagged;
         this.isOpened = isOpened;
     }
 
-    public static Cell of(int nearbyLandMineCount, boolean isLandMine, boolean isFlagged, boolean isOpened) {
-        return new Cell( nearbyLandMineCount, isLandMine, isFlagged, isOpened);
+    public static CellOld of(int nearbyLandMineCount, boolean isLandMine, boolean isFlagged, boolean isOpened) {
+        return new CellOld( nearbyLandMineCount, isLandMine, isFlagged, isOpened);
     }
 
-    public static Cell create() {
+    public static CellOld create() {
         return of(0, false, false, false);
     }
 

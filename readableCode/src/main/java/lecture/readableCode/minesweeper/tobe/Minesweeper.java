@@ -1,36 +1,44 @@
 package lecture.readableCode.minesweeper.tobe;
 
+import lecture.readableCode.minesweeper.tobe.game.GameRunnable;
 import lecture.readableCode.minesweeper.tobe.gamelevel.GameLevel;
-import lecture.readableCode.minesweeper.tobe.io.ConsoleInputHandler;
-import lecture.readableCode.minesweeper.tobe.io.ConsoleOutputHandler;
+import lecture.readableCode.minesweeper.tobe.io.InputHandler;
+import lecture.readableCode.minesweeper.tobe.io.OutputHandler;
 
-public class Minesweeper {
+public class Minesweeper implements GameRunnable, GameInitializable{
 
     private final GameBoard gameBoard;
-
     private final BoardIndexConverter boardIndexConverter = new BoardIndexConverter();
-    private final ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler();
-    private final ConsoleOutputHandler consoleOutputHandler = new ConsoleOutputHandler();
+
+    private final InputHandler inputHandler;
+    private final OutputHandler outputHandler;
+
     private int gameStatus = 0; // 0: 게임 중, 1: 승리, -1: 패배
 
-    public Minesweeper(GameLevel gameLevel) {
+    public Minesweeper(GameLevel gameLevel, InputHandler inputHandler, OutputHandler outputHandler) {
         this.gameBoard = new GameBoard(gameLevel);
+        this.inputHandler = inputHandler;
+        this.outputHandler = outputHandler;
+    }
+
+    @Override
+    public void initialize() {
+        gameBoard.initializeGame();
     }
 
     public void run() {
-        consoleOutputHandler.showGameStartComments();
-        gameBoard.initializeGame();
+        outputHandler.showGameStartComments();
 
         while (true) {
             try {
-                consoleOutputHandler.showBoard(gameBoard);
+                outputHandler.showBoard(gameBoard);
 
                 if (doesUserWinTheGame()) {
-                    consoleOutputHandler.printGameWinningComment();
+                    outputHandler.showGameWinningComment();
                     break;
                 }
                 if (doesUserLoseTheGame()) {
-                    consoleOutputHandler.printGameLosingComment();
+                    outputHandler.showGameLosingComment();
                     break;
                 }
 
@@ -38,9 +46,9 @@ public class Minesweeper {
                 String userActionInput = getUserActionInputFromUser();
                 actOnCell(cellInput, userActionInput);
             } catch (GameException e) {
-                consoleOutputHandler.printExceptionMessage(e);
+                outputHandler.showExceptionMessage(e);
             } catch (Exception e) {
-                consoleOutputHandler.printSimpleMessage("프로그램에 문제가 생겼습니다.");
+                outputHandler.showSimpleMessage("프로그램에 문제가 생겼습니다.");
             }
         }
     }
@@ -85,13 +93,13 @@ public class Minesweeper {
 
 
     private  String getUserActionInputFromUser() {
-        consoleOutputHandler.printCommentForUserAction();
-        return consoleInputHandler.getUserInput();
+        outputHandler.showCommentForUserAction();
+        return inputHandler.getUserInput();
     }
 
     private  String getCellInputFromUser() {
-        consoleOutputHandler.printCommentForSelectingCell();
-        return consoleInputHandler.getUserInput();
+        outputHandler.showCommentForSelectingCell();
+        return inputHandler.getUserInput();
     }
 
     private  boolean doesUserLoseTheGame() {
