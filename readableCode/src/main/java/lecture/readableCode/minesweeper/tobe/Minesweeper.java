@@ -1,5 +1,6 @@
 package lecture.readableCode.minesweeper.tobe;
 
+import lecture.readableCode.minesweeper.tobe.config.GameConfig;
 import lecture.readableCode.minesweeper.tobe.game.GameRunnable;
 import lecture.readableCode.minesweeper.tobe.gamelevel.GameLevel;
 import lecture.readableCode.minesweeper.tobe.io.InputHandler;
@@ -20,6 +21,13 @@ public class Minesweeper implements GameRunnable, GameInitializable{
         this.inputHandler = inputHandler;
         this.outputHandler = outputHandler;
     }
+
+    public Minesweeper(GameConfig gameConfig) {
+        this.gameBoard = new GameBoard(gameConfig.getGameLevel());
+        this.inputHandler = gameConfig.getInputHandler();
+        this.outputHandler = gameConfig.getOutputHandler();
+    }
+
 
     @Override
     public void initialize() {

@@ -1,5 +1,6 @@
 package lecture.readableCode.minesweeper.tobe;
 
+import lecture.readableCode.minesweeper.tobe.config.GameConfig;
 import lecture.readableCode.minesweeper.tobe.gamelevel.Advanced;
 import lecture.readableCode.minesweeper.tobe.io.ConsoleInputHandler;
 import lecture.readableCode.minesweeper.tobe.io.ConsoleOutputHandler;
@@ -7,7 +8,10 @@ import lecture.readableCode.minesweeper.tobe.io.ConsoleOutputHandler;
 public class GameApplication {
 
     public static void main(String[] args) {
-        Minesweeper minesweeper = new Minesweeper(new Advanced(), new ConsoleInputHandler(), new ConsoleOutputHandler());
+
+        GameConfig gameConfig = new GameConfig(new Advanced(), new ConsoleInputHandler(), new ConsoleOutputHandler());
+
+        Minesweeper minesweeper = new Minesweeper(gameConfig);
         minesweeper.initialize();
         minesweeper.run();
     }
