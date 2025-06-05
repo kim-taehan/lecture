@@ -77,6 +77,11 @@ public class GameBoard {
                 || cellPosition.isColIndexMoreThanOrEqual(colSize);
     }
 
+    public CellSnapshot getSnapshot(CellPosition cellPosition) {
+        Cell cell = findCell(cellPosition);
+        return cell.getSnapshot();
+    }
+
     public void flagAt(CellPosition cellPosition) {
         Cell cell = findCell(cellPosition);
         cell.flag();
@@ -123,11 +128,6 @@ public class GameBoard {
         return cell.isOpened();
     }
 
-    public String getSignAt(CellPosition cellPosition) {
-        Cell cell = findCell(cellPosition);
-        return cell.getSign();
-    }
-
     public int getRowSize() {
         return rowSize;
     }
@@ -155,4 +155,6 @@ public class GameBoard {
                 .filter(position -> position.isRowIndexLessThan(rowSize))
                 .filter(position -> position.isColIndexLessThan(colSize)).toList();
     }
+
+
 }

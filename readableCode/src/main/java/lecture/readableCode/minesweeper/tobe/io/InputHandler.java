@@ -1,10 +1,12 @@
 package lecture.readableCode.minesweeper.tobe.io;
 
 import lecture.readableCode.minesweeper.tobe.position.CellPosition;
+import lecture.readableCode.minesweeper.tobe.user.UserAction;
 
 public interface InputHandler {
 
-    String getUserInput();
+
+    UserAction getUserActionFromUser();
 
     CellPosition getCellPositionFromUser();
 }
