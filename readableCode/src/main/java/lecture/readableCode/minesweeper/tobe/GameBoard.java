@@ -18,15 +18,18 @@ public class GameBoard {
     private final int landMineCount;
     private final int rowSize;
     private final int colSize;
+    private GameStatus gameStatus;
 
     public GameBoard(GameLevel gameLevel) {
         board = new Cell[gameLevel.getRowSize()][gameLevel.getColSize()];
         this.landMineCount = gameLevel.getLandMineCount();
         this.rowSize = gameLevel.getRowSize();
         this.colSize = gameLevel.getColSize();
+        initializeGameStatus();
     }
-
     public void initializeGame() {
+
+        initializeGameStatus();
 
         CellPositions cellPositions = CellPositions.from(board);
 
@@ -37,6 +40,10 @@ public class GameBoard {
 
         List<CellPosition> numberPositionCandidates = cellPositions.subtract(landMineCellPositions);
         initializeNumberCells(numberPositionCandidates);
+    }
+
+    private void initializeGameStatus() {
+        gameStatus = GameStatus.IN_PROGRESS;
     }
 
     private void initializeNumberCells(List<CellPosition> numberPositionCandidates) {
@@ -85,9 +92,26 @@ public class GameBoard {
     public void flagAt(CellPosition cellPosition) {
         Cell cell = findCell(cellPosition);
         cell.flag();
+
+        checkIfGameIsOver();
     }
 
-    public void openAt(CellPosition cellPosition) {
+    private  void checkIfGameIsOver() {
+        if (isAllChecked()) {
+            changeGameStatusToWin();
+        }
+    }
+
+
+
+    private void changeGameStatusTOLose() {
+        gameStatus = GameStatus.LOSE;
+    }
+    private void changeGameStatusToWin() {
+        gameStatus = GameStatus.WIN;
+    }
+
+    public void openOneCellAt(CellPosition cellPosition) {
         Cell cell = this.findCell(cellPosition);
         cell.open();
     }
@@ -157,4 +181,26 @@ public class GameBoard {
     }
 
 
+    public boolean isInProgress() {
+        return gameStatus == GameStatus.IN_PROGRESS;
+    }
+
+    public void openAt(CellPosition cellPosition) {
+        if (isLandMineCellAt(cellPosition)) {
+            openOneCellAt(cellPosition);
+            changeGameStatusTOLose();
+            return;
+        }
+
+        openSurroundedCells(cellPosition);
+        checkIfGameIsOver();
+    }
+
+    public boolean isWinStatus() {
+        return gameStatus == GameStatus.WIN;
+    }
+
+    public boolean isLoseStatus() {
+        return gameStatus == GameStatus.LOSE;
+    }
 }
