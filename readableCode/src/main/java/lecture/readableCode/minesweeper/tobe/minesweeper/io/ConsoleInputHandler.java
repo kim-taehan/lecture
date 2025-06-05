@@ -5,7 +5,7 @@ import lecture.readableCode.minesweeper.tobe.minesweeper.user.UserAction;
 
 import java.util.Scanner;
 
-public class ConsoleInputHandler implements InputHandler{
+public class ConsoleInputHandler implements InputHandler {
 
     public static final Scanner SCANNER = new Scanner(System.in);
 

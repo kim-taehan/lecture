@@ -194,3 +194,9 @@
 
 ### 기능 유지보수하기(1) - 버그 잡기
 ### 기능 유지보수하기(2) - 알고리즘 교체하기
+
+### IDE 도움받기
+- Ctrl + Alt + L (코드 포맷 정리)
+- Ctrl + Alt + O (import 정리)
+- SonarLint : https://www.sonarsource.com/products/sonarlint/
+- editorconfig : https://editorconfig.org/

@@ -31,13 +31,12 @@ public class ConsoleOutputHandler implements OutputHandler {
 
                 CellSnapshot snapshot = board.getSnapshot(cellPosition);
                 String cellSign = CellSignProvider.findCellSignFrom(snapshot);
-                System.out.print(cellSign  + " ");
+                System.out.print(cellSign + " ");
             }
             System.out.println();
         }
         System.out.println();
     }
-
 
 
     private List<String> generateColAlphabet(GameBoard board) {

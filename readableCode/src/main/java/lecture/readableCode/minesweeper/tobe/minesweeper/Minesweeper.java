@@ -1,13 +1,13 @@
 package lecture.readableCode.minesweeper.tobe.minesweeper;
 
-import lecture.readableCode.minesweeper.tobe.minesweeper.board.GameBoard;
-import lecture.readableCode.minesweeper.tobe.minesweeper.config.GameConfig;
-import lecture.readableCode.minesweeper.tobe.minesweeper.exception.GameException;
 import lecture.readableCode.minesweeper.tobe.game.GameInitializable;
 import lecture.readableCode.minesweeper.tobe.game.GameRunnable;
+import lecture.readableCode.minesweeper.tobe.minesweeper.board.GameBoard;
+import lecture.readableCode.minesweeper.tobe.minesweeper.board.position.CellPosition;
+import lecture.readableCode.minesweeper.tobe.minesweeper.config.GameConfig;
+import lecture.readableCode.minesweeper.tobe.minesweeper.exception.GameException;
 import lecture.readableCode.minesweeper.tobe.minesweeper.io.InputHandler;
 import lecture.readableCode.minesweeper.tobe.minesweeper.io.OutputHandler;
-import lecture.readableCode.minesweeper.tobe.minesweeper.board.position.CellPosition;
 import lecture.readableCode.minesweeper.tobe.minesweeper.user.UserAction;
 
 public class Minesweeper implements GameRunnable, GameInitializable {
@@ -94,13 +94,6 @@ public class Minesweeper implements GameRunnable, GameInitializable {
     private boolean doesUserChooseToOpenCel(UserAction userAction) {
         return userAction == UserAction.OPEN;
     }
-
-
-
-
-
-
-
 
 
 }

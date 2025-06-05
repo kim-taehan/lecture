@@ -7,37 +7,36 @@ import java.util.Arrays;
 
 public enum CellSignProvider implements CellSignProvidable {
 
-    EMPTY(CellSnapshotStatus.EMPTY){
+    EMPTY(CellSnapshotStatus.EMPTY) {
         @Override
         public String provide(CellSnapshot cellSnapshot) {
             return EMPTY_SIGN;
         }
     },
-    FLAG(CellSnapshotStatus.FLAG){
+    FLAG(CellSnapshotStatus.FLAG) {
         @Override
         public String provide(CellSnapshot cellSnapshot) {
             return FLAG_SIGN;
         }
     },
-    LAND_MINE(CellSnapshotStatus.LAND_MINE){
+    LAND_MINE(CellSnapshotStatus.LAND_MINE) {
         @Override
         public String provide(CellSnapshot cellSnapshot) {
             return LAND_MINE_SIGN;
         }
     },
-    NUMBER(CellSnapshotStatus.NUMBER){
+    NUMBER(CellSnapshotStatus.NUMBER) {
         @Override
         public String provide(CellSnapshot cellSnapshot) {
             return String.valueOf(cellSnapshot.getNearByLandMineCount());
         }
     },
-    UNCHECKED(CellSnapshotStatus.UNCHECKED){
+    UNCHECKED(CellSnapshotStatus.UNCHECKED) {
         @Override
         public String provide(CellSnapshot cellSnapshot) {
             return UNCHECKED_SIGN;
         }
-    }
-    ;
+    };
 
     private static final String EMPTY_SIGN = "■";
     private static final String FLAG_SIGN = "⚑";

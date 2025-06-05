@@ -34,7 +34,7 @@ public class CellSnapshot {
     }
 
     public static CellSnapshot ofUnchecked() {
-        return of(CellSnapshotStatus.UNCHECKED,0);
+        return of(CellSnapshotStatus.UNCHECKED, 0);
     }
 
     public CellSnapshotStatus getStatus() {

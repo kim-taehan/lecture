@@ -1,10 +1,12 @@
 package lecture.readableCode.minesweeper.tobe.minesweeper.board;
 
 import lecture.readableCode.minesweeper.tobe.minesweeper.board.cell.*;
-import lecture.readableCode.minesweeper.tobe.minesweeper.gamelevel.GameLevel;
 import lecture.readableCode.minesweeper.tobe.minesweeper.board.position.CellPosition;
 import lecture.readableCode.minesweeper.tobe.minesweeper.board.position.CellPositions;
+import lecture.readableCode.minesweeper.tobe.minesweeper.gamelevel.GameLevel;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Supplier;
@@ -154,16 +156,16 @@ public class GameBoard {
     }
 
     private void openSurroundedCells(CellPosition cellPosition) {
-        Stack<CellPosition> stack = new Stack<>();
-        stack.push(cellPosition);
-        while (stack.isEmpty()) {
-            openAndPushCellAt(stack);
+        Deque<CellPosition> deque = new ArrayDeque<>();
+        deque.push(cellPosition);
+        while (deque.isEmpty()) {
+            openAndPushCellAt(deque);
         }
     }
 
-    private void openAndPushCellAt(Stack<CellPosition> stack) {
+    private void openAndPushCellAt(Deque<CellPosition> deque) {
 
-        CellPosition currentCellPosition = stack.pop();
+        CellPosition currentCellPosition = deque.pop();
         if (isOpenedCell(currentCellPosition)) {
             return;
         }
@@ -177,7 +179,7 @@ public class GameBoard {
 
         List<CellPosition> cellPositions = calculateSurroundedPositions(currentCellPosition);
         for (CellPosition cellPosition : cellPositions) {
-            stack.push(cellPosition);
+            deque.push(cellPosition);
         }
     }
 
