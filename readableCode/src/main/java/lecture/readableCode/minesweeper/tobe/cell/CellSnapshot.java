@@ -1,5 +1,7 @@
 package lecture.readableCode.minesweeper.tobe.cell;
 
+import java.util.Objects;
+
 public class CellSnapshot {
 
     private final CellSnapshotStatus status;
@@ -41,5 +43,17 @@ public class CellSnapshot {
 
     public int getNearByLandMineCount() {
         return nearByLandMineCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        CellSnapshot snapshot = (CellSnapshot) o;
+        return nearByLandMineCount == snapshot.nearByLandMineCount && status == snapshot.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, nearByLandMineCount);
     }
 }
