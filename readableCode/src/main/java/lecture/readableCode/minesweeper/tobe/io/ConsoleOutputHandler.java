@@ -1,6 +1,7 @@
 package lecture.readableCode.minesweeper.tobe.io;
 
 import lecture.readableCode.minesweeper.tobe.GameBoard;
+import lecture.readableCode.minesweeper.tobe.position.CellPosition;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -24,7 +25,8 @@ public class ConsoleOutputHandler implements OutputHandler {
         for (int row = 0; row < board.getRowSize(); row++) {
             System.out.printf("%2d  ", row + 1);
             for (int col = 0; col < board.getColSize(); col++) {
-                System.out.print(board.getSign(row,col)  + " ");
+                CellPosition cellPosition = CellPosition.of(row, col);
+                System.out.print(board.getSignAt(cellPosition)  + " ");
             }
             System.out.println();
         }
