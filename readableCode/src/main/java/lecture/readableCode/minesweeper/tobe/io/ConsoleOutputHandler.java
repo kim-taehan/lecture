@@ -2,18 +2,13 @@ package lecture.readableCode.minesweeper.tobe.io;
 
 import lecture.readableCode.minesweeper.tobe.GameBoard;
 import lecture.readableCode.minesweeper.tobe.cell.CellSnapshot;
-import lecture.readableCode.minesweeper.tobe.cell.CellSnapshotStatus;
+import lecture.readableCode.minesweeper.tobe.io.sign.*;
 import lecture.readableCode.minesweeper.tobe.position.CellPosition;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class ConsoleOutputHandler implements OutputHandler {
-
-    private static final String EMPTY_SIGN = "■";
-    private static final String LAND_MINE_SIGN = "☼";
-    private static final String FLAG_SIGN = "⚑";
-    private static final String UNCHECKED_SIGN = "□";
 
     @Override
     public void showGameStartComments() {
@@ -35,7 +30,7 @@ public class ConsoleOutputHandler implements OutputHandler {
                 CellPosition cellPosition = CellPosition.of(row, col);
 
                 CellSnapshot snapshot = board.getSnapshot(cellPosition);
-                String cellSign = decideCellSignFrom(snapshot);
+                String cellSign = CellSignProvider.findCellSignFrom(snapshot);
                 System.out.print(cellSign  + " ");
             }
             System.out.println();
@@ -43,26 +38,7 @@ public class ConsoleOutputHandler implements OutputHandler {
         System.out.println();
     }
 
-    private String decideCellSignFrom(CellSnapshot snapshot) {
 
-        CellSnapshotStatus status = snapshot.getStatus();
-        if (status == CellSnapshotStatus.EMPTY) {
-            return EMPTY_SIGN;
-        }
-        if (status == CellSnapshotStatus.FLAG) {
-            return FLAG_SIGN;
-        }
-        if (status == CellSnapshotStatus.LAND_MINE) {
-            return LAND_MINE_SIGN;
-        }
-        if (status == CellSnapshotStatus.NUMBER) {
-            return String.valueOf(snapshot.getNearByLandMineCount());
-        }
-        if (status == CellSnapshotStatus.UNCHECKED) {
-            return UNCHECKED_SIGN;
-        }
-        throw new IllegalArgumentException("확인할 수 없는 cell 입니다.");
-    }
 
     private List<String> generateColAlphabet(GameBoard board) {
         return IntStream.range(0, board.getColSize())
