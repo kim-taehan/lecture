@@ -1,16 +1,14 @@
 package lecture.readableCode.minesweeper.tobe;
 
-import lecture.readableCode.minesweeper.tobe.cell.Cell;
-import lecture.readableCode.minesweeper.tobe.cell.EmptyCell;
-import lecture.readableCode.minesweeper.tobe.cell.LandMineCell;
-import lecture.readableCode.minesweeper.tobe.cell.NumberCell;
+import lecture.readableCode.minesweeper.tobe.cell.*;
 import lecture.readableCode.minesweeper.tobe.gamelevel.GameLevel;
 import lecture.readableCode.minesweeper.tobe.position.CellPosition;
+import lecture.readableCode.minesweeper.tobe.position.CellPositions;
 import lecture.readableCode.minesweeper.tobe.position.RelativePosition;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import static lecture.readableCode.minesweeper.tobe.position.RelativePosition.SURROUND_POSITIONS;
 
@@ -21,13 +19,6 @@ public class GameBoard {
     private final int rowSize;
     private final int colSize;
 
-    public GameBoard(int rowSize, int colSize, int landMineCount) {
-        board = new Cell[rowSize][colSize];
-        this.landMineCount = landMineCount;
-        this.rowSize = rowSize;
-        this.colSize = colSize;
-    }
-
     public GameBoard(GameLevel gameLevel) {
         board = new Cell[gameLevel.getRowSize()][gameLevel.getColSize()];
         this.landMineCount = gameLevel.getLandMineCount();
@@ -36,30 +27,44 @@ public class GameBoard {
     }
 
     public void initializeGame() {
-        for (int row = 0; row < rowSize; row++) {
-            for (int col = 0; col < colSize; col++) {
-                board[row][col] = new EmptyCell();
+
+        CellPositions cellPositions = CellPositions.from(board);
+
+        initializeEmptyCells(cellPositions);
+
+        List<CellPosition> landMineCellPositions = cellPositions.extractRandomPositions(landMineCount);
+        initializeLandMineCells(landMineCellPositions);
+
+        List<CellPosition> numberPositionCandidates = cellPositions.subtract(landMineCellPositions);
+        initializeNumberCells(numberPositionCandidates);
+    }
+
+    private void initializeNumberCells(List<CellPosition> numberPositionCandidates) {
+        for (CellPosition candidatePosition : numberPositionCandidates) {
+            int count = countNearByLandMines(candidatePosition);
+            if (count != 0) {
+                updateCellAt(candidatePosition, () -> new NumberCell(count));
             }
         }
+    }
 
-        for (int i = 0; i < landMineCount; i++) {
-            int col = new Random().nextInt(colSize);
-            int row = new Random().nextInt(rowSize);
-            board[row][col] = new LandMineCell();
+    private void initializeLandMineCells(List<CellPosition> landMineCellPositions) {
+        updateCellsAt(landMineCellPositions, LandMineCell::new);
+    }
+
+    private void initializeEmptyCells(CellPositions cellPositions) {
+        List<CellPosition> allPositions = cellPositions.getPositions();
+        updateCellsAt(allPositions, EmptyCell::new);
+    }
+
+    private void updateCellsAt(List<CellPosition> allPositions, Supplier<Cell> supplierForCell) {
+        for (CellPosition position : allPositions) {
+            updateCellAt(position, supplierForCell);
         }
+    }
 
-        for (int row = 0; row < rowSize; row++) {
-            for (int col = 0; col < colSize; col++) {
-                CellPosition cellPosition = CellPosition.of(row, col);
-                if (isLandMineCellAt(cellPosition)) {
-                    continue;
-                }
-                int count = countNearByLandMines(cellPosition);
-                if(count == 0) continue;
-
-                board[row][col] = new NumberCell(count);
-            }
-        }
+    private void updateCellAt(CellPosition position, Supplier<Cell> supplierForCell) {
+        board[position.getRowIndex()][position.getColIndex()] = supplierForCell.get();
     }
 
     public boolean isLandMineCellAt(CellPosition cellPosition) {
@@ -83,9 +88,8 @@ public class GameBoard {
     }
 
     public boolean isAllChecked() {
-        return Arrays.stream(board)
-                .flatMap(Arrays::stream)
-                .allMatch(Cell::isChecked);
+        Cells cells = Cells.from(board);
+        return cells.isAllChecked();
     }
 
     public void openSurroundedCells(CellPosition cellPosition) {
