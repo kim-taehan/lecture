@@ -1,6 +1,8 @@
 package lecture.readableCode.studycafe.tobe.io;
 
-import lecture.readableCode.studycafe.tobe.model.*;
+import lecture.readableCode.studycafe.tobe.model.pass.*;
+import lecture.readableCode.studycafe.tobe.model.pass.locker.StudyCafeLockerPass;
+import lecture.readableCode.studycafe.tobe.model.pass.locker.StudyCafeLockerPasses;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -10,13 +12,13 @@ import java.util.List;
 
 public class StudyCafeFileHandler {
 
-    public StudyCafePasses readStudyCafePasses() {
+    public StudyCafeSeatPasses readStudyCafePasses() {
         try {
             InputStream inputStream = StudyCafeFileHandler.class.getClassLoader()
                     .getResourceAsStream("cleancode/studycafe/pass-list.csv");
             List<String> lines = new BufferedReader(new InputStreamReader(inputStream))
                     .lines().toList();
-            List<StudyCafePass> studyCafePasses = new ArrayList<>();
+            List<StudyCafeSeatPass> studyCafeSeatPasses = new ArrayList<>();
             for (String line : lines) {
                 String[] values = line.split(",");
                 StudyCafePassType studyCafePassType = StudyCafePassType.valueOf(values[0]);
@@ -24,11 +26,11 @@ public class StudyCafeFileHandler {
                 int price = Integer.parseInt(values[2]);
                 double discountRate = Double.parseDouble(values[3]);
 
-                StudyCafePass studyCafePass = StudyCafePass.of(studyCafePassType, duration, price, discountRate);
-                studyCafePasses.add(studyCafePass);
+                StudyCafeSeatPass studyCafeSeatPass = StudyCafeSeatPass.of(studyCafePassType, duration, price, discountRate);
+                studyCafeSeatPasses.add(studyCafeSeatPass);
             }
 
-            return StudyCafePasses.of(studyCafePasses);
+            return StudyCafeSeatPasses.of(studyCafeSeatPasses);
         } catch (Exception e) {
             throw new RuntimeException("파일을 읽는데 실패했습니다.", e);
         }
