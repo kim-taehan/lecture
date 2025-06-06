@@ -1,8 +1,6 @@
 package lecture.readableCode.studycafe.tobe.io;
 
-import lecture.readableCode.studycafe.tobe.model.StudyCafeLockerPass;
-import lecture.readableCode.studycafe.tobe.model.StudyCafePass;
-import lecture.readableCode.studycafe.tobe.model.StudyCafePassType;
+import lecture.readableCode.studycafe.tobe.model.*;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -12,7 +10,7 @@ import java.util.List;
 
 public class StudyCafeFileHandler {
 
-    public List<StudyCafePass> readStudyCafePasses() {
+    public StudyCafePasses readStudyCafePasses() {
         try {
             InputStream inputStream = StudyCafeFileHandler.class.getClassLoader()
                     .getResourceAsStream("cleancode/studycafe/pass-list.csv");
@@ -30,13 +28,13 @@ public class StudyCafeFileHandler {
                 studyCafePasses.add(studyCafePass);
             }
 
-            return studyCafePasses;
+            return StudyCafePasses.of(studyCafePasses);
         } catch (Exception e) {
             throw new RuntimeException("파일을 읽는데 실패했습니다.", e);
         }
     }
 
-    public List<StudyCafeLockerPass> readLockerPasses() {
+    public StudyCafeLockerPasses readLockerPasses() {
         try {
             InputStream inputStream = StudyCafeFileHandler.class.getClassLoader()
                     .getResourceAsStream("cleancode/studycafe/locker.csv");
@@ -53,7 +51,7 @@ public class StudyCafeFileHandler {
                 lockerPasses.add(lockerPass);
             }
 
-            return lockerPasses;
+            return StudyCafeLockerPasses.of(lockerPasses);
         } catch (Exception e) {
             throw new RuntimeException("파일을 읽는데 실패했습니다.", e);
         }
