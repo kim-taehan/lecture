@@ -39,18 +39,17 @@ public class StudyCafeSeatPass implements StudyCafePass {
         return price;
     }
 
-    public double getDiscountRate() {
-        return discountRate;
-    }
-
 
     public boolean isSameDurationType(StudyCafeLockerPass lockerPass) {
         return lockerPass.isSamePassType(this.passType)
                 && lockerPass.isSameDuration(this.duration);
     }
 
-
     public boolean cannotUseLocker() {
         return this.passType.isNotLockerType();
+    }
+
+    public int getDiscountPrice() {
+        return (int) (price * discountRate);
     }
 }
