@@ -7,5 +7,23 @@ include 'java-adv3'
 
 
 include 'readableCode'
-include 'Object2'
 include 'object2'
+
+include 'large-scale-system-design'
+include 'large-scale-system-design:service'
+include 'large-scale-system-design:service:article'
+include 'large-scale-system-design:service:comment'
+include 'large-scale-system-design:service:view'
+include 'large-scale-system-design:service:like'
+include 'large-scale-system-design:service:hot-article'
+include 'large-scale-system-design:service:article-read'
+
+include 'large-scale-system-design:common'
+include 'large-scale-system-design:common:snowflake'
+include 'large-scale-system-design:common:data-serializer'
+include 'large-scale-system-design:common:event'
+include 'large-scale-system-design:common:outbox-message-relay'
+
+include 'study'
+include 'ai-cording'
+include 'oauth'
