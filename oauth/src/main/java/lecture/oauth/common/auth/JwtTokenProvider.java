@@ -13,14 +13,11 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String secretKey;
-
     private final int expiration;
 
     private Key SECRET_KEY;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, @Value("${jwt.expiration}")int expiration) {
-        this.secretKey = secretKey;
         this.expiration = expiration;
         this.SECRET_KEY = new SecretKeySpec(
                 java.util.Base64.getDecoder().decode(secretKey),
