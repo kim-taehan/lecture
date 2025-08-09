@@ -1,7 +1,7 @@
 plugins {
     id("java")
+    id("com.github.spotbugs") version "6.2.3"
 }
-
 group = "org.example"
 version = "unspecified"
 
