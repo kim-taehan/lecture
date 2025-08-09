@@ -1,7 +1,7 @@
 package lecture.splearn.domain;
 
 public record
-MemberCreateRequest(
+MemberRegisterRequest(
         String email,
         String nickname,
         String password
