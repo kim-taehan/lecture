@@ -1,0 +1,8 @@
+rootProject.name = 'hypernova-backend'
+include 'core'
+include 'project-assistant'
+include 'sample'
+include 'test-scenario'
+include 'requirements-specification'
+include 'application-design'
+include 'davis-batch'

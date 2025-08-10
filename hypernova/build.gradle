@@ -1,0 +1,105 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2' apply(false)
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+ext {
+    springCloudVersion = '2023.0.3'
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.skcc.hypernova'
+    version = '0.0.1-SNAPSHOT'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    dependencies {
+        // Spring Boot
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+        implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+        implementation 'org.springframework.boot:spring-boot-starter-cache'
+
+        // Keycloak
+        implementation 'org.keycloak:keycloak-spring-boot-starter:24.0.4'
+        implementation 'org.keycloak:keycloak-admin-client:25.0.6'
+
+        // Spring Cloud
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+        // Test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+        // Swagger
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+        // Lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        // Database
+        runtimeOnly 'org.postgresql:postgresql'
+
+        // QueryDsl
+        implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+        annotationProcessor 'com.querydsl:querydsl-apt:5.1.0:jakarta'
+        annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+        annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+        implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1'
+
+        // Commons IO
+        implementation 'commons-io:commons-io:2.13.0'
+
+        // Caffeine (Local Cache)
+        implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+
+        // POI 기본 기능 (HSSF: XLS, XSSF: XLSX)
+        implementation 'org.apache.poi:poi:5.2.3'
+        implementation 'org.apache.poi:poi-ooxml:5.2.3'
+
+        // class file for javax.annotation.meta.When not found
+        implementation 'com.google.code.findbugs:jsr305:3.0.2' 
+    }
+
+    tasks.named('jar') {
+        enabled = false
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}
+
