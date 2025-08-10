@@ -21,6 +21,6 @@ public class MemberFixture {
     }
 
     public static MemberRegisterRequest createMemberRegisterRequest(String email) {
-        return new MemberRegisterRequest(email, "kobe", "secret");
+        return new MemberRegisterRequest(email, "kobe24", "longsecret");
     }
 }
