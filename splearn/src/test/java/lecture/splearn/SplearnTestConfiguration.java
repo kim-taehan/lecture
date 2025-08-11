@@ -1,8 +1,8 @@
 package lecture.splearn;
 
-import lecture.splearn.application.required.EmailSender;
-import lecture.splearn.domain.MemberFixture;
-import lecture.splearn.domain.PasswordEncoder;
+import lecture.splearn.application.member.required.EmailSender;
+import lecture.splearn.domain.member.MemberFixture;
+import lecture.splearn.domain.member.PasswordEncoder;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 

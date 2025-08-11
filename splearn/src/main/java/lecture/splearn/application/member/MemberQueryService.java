@@ -1,9 +1,9 @@
-package lecture.splearn.application;
+package lecture.splearn.application.member;
 
 import jakarta.transaction.Transactional;
-import lecture.splearn.application.provided.MemberFinder;
-import lecture.splearn.application.required.MemberRepository;
-import lecture.splearn.domain.Member;
+import lecture.splearn.application.member.provided.MemberFinder;
+import lecture.splearn.application.member.required.MemberRepository;
+import lecture.splearn.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;

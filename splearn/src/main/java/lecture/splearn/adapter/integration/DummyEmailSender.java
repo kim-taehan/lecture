@@ -1,7 +1,7 @@
 package lecture.splearn.adapter.integration;
 
-import lecture.splearn.application.required.EmailSender;
-import lecture.splearn.domain.Email;
+import lecture.splearn.application.member.required.EmailSender;
+import lecture.splearn.domain.shared.Email;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Fallback;
 import org.springframework.stereotype.Component;

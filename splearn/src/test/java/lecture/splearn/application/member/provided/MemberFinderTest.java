@@ -1,10 +1,12 @@
-package lecture.splearn.application.provided;
+package lecture.splearn.application.member.provided;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lecture.splearn.SplearnTestConfiguration;
-import lecture.splearn.domain.Member;
-import lecture.splearn.domain.MemberFixture;
+import lecture.splearn.application.member.provided.MemberFinder;
+import lecture.splearn.application.member.provided.MemberRegister;
+import lecture.splearn.domain.member.Member;
+import lecture.splearn.domain.member.MemberFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

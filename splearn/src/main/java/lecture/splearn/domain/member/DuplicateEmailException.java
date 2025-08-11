@@ -1,4 +1,4 @@
-package lecture.splearn.domain;
+package lecture.splearn.domain.member;
 
 public class DuplicateEmailException extends RuntimeException {
 

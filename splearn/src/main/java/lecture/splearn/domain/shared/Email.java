@@ -1,4 +1,4 @@
-package lecture.splearn.domain;
+package lecture.splearn.domain.shared;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
