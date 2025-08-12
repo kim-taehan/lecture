@@ -1,0 +1,61 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### Q Class ###
+**/src/main/generated/**
+
+### IDE ###
+.DS_Store
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Attached Files ###
+/uploads
+
+### Logs ###
+/logs
+*.log
+
+# 본 파일은 가능한 수정하지 말아주세요 :)
+#application-design/
+#core/
+#sample/
+#requirements-specification/
+#project-assistant/
+#.build.gradle
+#settings.gradle
+
+.cursor/
