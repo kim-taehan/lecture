@@ -5,44 +5,21 @@ spring:
   application:
     name: article-service
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/oauthdb
-    username: root
-    password: root
+    # H2 DB 드라이버 클래스
+    driver-class-name: org.h2.Driver
+    # H2 메모리 DB URL. "mem:testdb"는 'testdb'라는 이름의 메모리 DB를 생성합니다.
+    url: jdbc:h2:mem:testdb
+    # H2 DB의 기본 사용자명
+    username: sa
+    # H2 DB의 기본 비밀번호는 비워둡니다.
+    password:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    #url: jdbc:mysql://127.0.0.1:3306/mydatabase
+#    username: myuser
+#    password: secret
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+#    database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: false
     show-sql: true
     hibernate:
       ddl-auto: update
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 933762473158-np6oes3306klhkrlp9d366go5l8hlvif.apps.googleusercontent.com
-            client-secret:
-            scope: openid, email, profile
-            redirect-uri: http://localhost:8080/login/oauth2/code/google
-            authorization-grant-type: authorization_code
-        provider:
-          google:
-            authorization-uri: https://accounts.google.com/o/oauth2/auth
-            token-uri: https://oauth2.googleapis.com/token
-            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
-            user-name-attribute: sub
-
-jwt:
-  #   32글자 이상 인코딩된 문자열 : oauthserversecretaccesstokenoauthserversecretaccesstokenoauthserversecretaccesstoken
-  secret: b2F1dGhzZXJ2ZXJzZWNyZXRhY2Nlc3N0b2tlbm9hdXRoc2VydmVyc2VjcmV0YWNjZXNzdG9rZW5vYXV0aHNlcnZlcnNlY3JldGFjY2Vzc3Rva2Vu
-  expiration: 3000
-
-
-oauth:
-  google:
-    client-id: 933762473158-np6oes3306klhkrlp9d366go5l8hlvif.apps.googleusercontent.com
-    client-secret:
-    redirect-uri: http://localhost:3000/oauth/google/redirect
-  kakao:
-    client-id: 6bc81aa442dd8ac8abd2c583b6e3ca62
-    redirect-uri: http://localhost:3000/oauth/kakao/redirect

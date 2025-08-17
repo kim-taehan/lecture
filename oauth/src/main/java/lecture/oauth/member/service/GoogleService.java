@@ -52,6 +52,7 @@ public class GoogleService {
         return response.getBody();
     }
 
+
     public GoogleProfileDto getGoogleProfile(String token){
         RestClient restClient = RestClient.create();
         ResponseEntity<GoogleProfileDto> response =  restClient.get()
