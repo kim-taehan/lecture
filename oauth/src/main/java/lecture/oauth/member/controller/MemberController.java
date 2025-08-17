@@ -7,6 +7,7 @@ import lecture.oauth.member.dto.*;
 import lecture.oauth.member.service.GoogleService;
 import lecture.oauth.member.service.KakaoService;
 import lecture.oauth.member.service.MemberService;
+import lecture.oauth.member.service.PimsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,8 @@ public class MemberController {
     private final GoogleService googleService;
 
     private final KakaoService kakaoService;
+
+    private final PimsService pimsService;
 
     @PostMapping("/create")
     public ResponseEntity<?> memberCreate(@RequestBody MemberCreateDto dto) {
@@ -80,6 +83,23 @@ public class MemberController {
         Member originalMember = memberService.getMemberBySocialId(kakaoProfileDto.getId());
         if(originalMember == null){
             originalMember = memberService.createOauth(kakaoProfileDto.getId(), kakaoProfileDto.getKakao_account().getEmail(), SocialType.KAKAO);
+        }
+        String jwtToken = jwtTokenProvider.createToken(originalMember.getEmail(), originalMember.getRole().toString());
+
+        Map<String, Object> loginInfo = new HashMap<>();
+        loginInfo.put("id", originalMember.getId());
+        loginInfo.put("token", jwtToken);
+        return new ResponseEntity<>(loginInfo, HttpStatus.OK);
+    }
+
+    @PostMapping("/pims/doLogin")
+    public ResponseEntity<?> pimsLogin(@RequestBody RedirectDto redirectDto){
+        AccessTokenDto accessToken = pimsService.getAccessToken(redirectDto.getCode());
+        PimsProfileDto pimsProfile = pimsService.getPimsProfile(accessToken.getAccess_token());
+
+        Member originalMember = memberService.getMemberBySocialId(pimsProfile.getSub());
+        if(originalMember == null){
+            originalMember = memberService.createOauth(pimsProfile.getSub(), pimsProfile.getEmail(), SocialType.GOOGLE);
         }
         String jwtToken = jwtTokenProvider.createToken(originalMember.getEmail(), originalMember.getRole().toString());
 

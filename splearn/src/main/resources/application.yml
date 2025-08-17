@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: splearn
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create

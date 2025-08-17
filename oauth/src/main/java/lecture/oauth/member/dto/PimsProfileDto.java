@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true) //없는 필드는 자동무시
-public class AccessTokenDto {
-    private String access_token;
-    private String refresh_token;
-    private String expires_in;
-    private String scope;
-    private String id_token;
+public class PimsProfileDto {
+    private String sub;
+    private String email;
 }

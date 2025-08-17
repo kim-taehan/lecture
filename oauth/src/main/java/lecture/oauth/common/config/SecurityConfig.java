@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    public static final String[] UNCHECKED_URL = {"/member/create", "/member/doLogin", "/member/google/doLogin", "/member/kakao/doLogin", "/oauth2/**"};
+    public static final String[] UNCHECKED_URL = {"/member/create", "/member/doLogin", "/member/pims/doLogin", "/member/google/doLogin", "/member/kakao/doLogin", "/oauth2/**"};
     private final JwtTokenFilter jwtTokenFilter;
     private final GoogleOauth2LoginSuccess googleOauth2LoginSuccess;
 
